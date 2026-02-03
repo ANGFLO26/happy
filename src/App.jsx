@@ -242,6 +242,44 @@ function App() {
     const [isLaunched, setIsLaunched] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
 
+    // --- NHẬP ACCESS KEY CỦA BẠN VÀO DÒNG DƯỚI ĐÂY ---
+    const ACCESS_KEY = "67f1c8ae-462c-4ba0-ad97-f7526bc2b1cf";
+
+    const sendToEmail = async (message, senderName) => {
+      if (ACCESS_KEY === "YOUR_ACCESS_KEY_HERE") {
+        console.log("Chưa nhập Access Key nên chưa gửi được Email.");
+        return;
+      }
+
+      try {
+        const formData = new FormData();
+        formData.append("access_key", ACCESS_KEY);
+        formData.append("subject", `🌟 Điều ước mới từ: ${senderName || "Duyên"}`);
+        formData.append("message", `Nội dung điều ước:\n\n${message}\n\n----------------\nThời gian: ${new Date().toLocaleString('vi-VN')}`);
+        formData.append("from_name", "Hapy Birthday App");
+
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+        console.log("Đã gửi email thành công!");
+      } catch (error) {
+        console.error("Lỗi gửi email:", error);
+      }
+    };
+
+    const saveWish = (message) => {
+      const textContent = `Thời gian: ${new Date().toLocaleString('vi-VN')}\n\nĐiều ước của Duyên:\n${message}\n\n--------------------------------\nĐược gửi tới các vì sao ✨`;
+      const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `dieu-uoc-cua-duyen-${Date.now()}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+
     const handleSubmit = (e) => {
       e.preventDefault();
       if (!msg) return;
@@ -253,7 +291,11 @@ function App() {
         setIsLaunched(true);
 
         // Show success message after rocket has launched (6s delay)
-        setTimeout(() => setShowSuccess(true), 6000);
+        setTimeout(() => {
+          setShowSuccess(true);
+          saveWish(msg);
+          sendToEmail(msg, name);
+        }, 6000);
 
         setTimeout(() => {
           setWishes([...wishes, { id: Date.now(), name, message: msg }]);

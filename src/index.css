@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ff4d8d;
+  --color-secondary: #a78bfa;
+  --color-accent: #facc15;
+  --color-background-light: #fff5f8;
+  --color-background-dark: #1a0b12;
+
+  --font-display: "Pacifico", cursive;
+  --font-handwriting: "Dancing Script", cursive;
+  --font-body: "Quicksand", sans-serif;
+}
+
+/* Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out 3s infinite;
+  }
+
+  .animate-twinkle {
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  /* Increased duration for more dramatic effect */
+  .animate-launch {
+    animation: launch-up 8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .animate-pulse-fast {
+    animation: pulse-fast 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+
+  .animate-gradient-xy {
+    animation: gradient-xy 15s ease infinite;
+  }
+
+  /* Warp speed effect */
+  .animate-warp {
+    animation: warp-speed 2s linear infinite;
+  }
+
+  .bg-size-200 {
+    background-size: 200% 200%;
+  }
+
+  .sparkle-bg {
+    background: radial-gradient(circle at 20% 30%, rgba(255, 77, 141, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(167, 139, 250, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.05) 0%, transparent 60%);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  }
+
+  .dark .glass-panel {
+    background: rgba(30, 20, 30, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(255, 77, 141, 0.5), 0 0 20px rgba(255, 77, 141, 0.3);
+  }
+
+  /* Hide scrollbar */
+  .scroll-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Enhanced Launch Animation */
+@keyframes launch-up {
+  0% {
+    transform: translateY(100px) scale(0.5);
+    opacity: 0;
+  }
+
+  10% {
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+  }
+
+  30% {
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+  }
+
+  /* Hover/Charge phase */
+  45% {
+    transform: translateY(20px) scale(0.9);
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+
+  /* Crouch */
+  50% {
+    transform: translateY(-50px) scale(1.1);
+    opacity: 1;
+    filter: brightness(1.5);
+  }
+
+  /* Initial blast */
+  100% {
+    transform: translateY(-150vh) scale(0.2);
+    opacity: 0;
+  }
+
+  /* Disappear into space */
+}
+
+@keyframes gradient-xy {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-fast {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: .7;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes warp-speed {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(800px) scale(0.1);
+    opacity: 0;
+  }
+}
+
+/* Custom styles */
+.heart-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
